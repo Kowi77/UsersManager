@@ -4,9 +4,8 @@ import kov.develop.model.User;
 import kov.develop.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,7 +13,7 @@ import java.util.List;
 @RequestMapping(value = UserRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class UserRestController {
 
-    static final String REST_URL = "/users";
+    static final String REST_URL = "/user";
 
     private UserService service;
 
@@ -27,4 +26,20 @@ public class UserRestController {
     public List<User> getAll() {
         return service.getAll();
     }
+
+    @GetMapping("/{id}")
+    public User get(@PathVariable("id") int id){
+        return service.get(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") int id){
+        service.delete(id);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void save(@RequestBody User user){
+        service.save(user);
+    }
+
 }

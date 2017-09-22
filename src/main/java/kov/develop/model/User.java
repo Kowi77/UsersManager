@@ -1,5 +1,6 @@
 package kov.develop.model;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
@@ -7,19 +8,22 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "userslist")
 @Data
-@NoArgsConstructor
+//@NoArgsConstructor
 @EqualsAndHashCode( exclude = "id")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class User {
+@JsonAutoDetect
+public class User implements Serializable{
 
     @Id
     @Column(name = "id")
-    @GeneratedValue
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     private int id;
 
     @Column(name = "firstName")
@@ -51,5 +55,7 @@ public class User {
     @NotBlank
     private String adress;
 
+    public User() {
+    }
 }
 
