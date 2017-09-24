@@ -2,37 +2,14 @@ var ajaxUrl = "user/";
 var datatableApi;
 var form=$('#detailsForm');
 
+//Prepare for add/edit user
+
 function add() {
     $("#modalTitle").html("Добавление пользователя");
     $("#detailsForm").find(":input").val("");
     $("#editRow").modal();
 }
 
-function save() {
-    $.ajax({
-        type: "POST",
-        url: ajaxUrl,
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
-        data:form.serialize(),
-        success: function () {
-            $("#editRow").modal("hide");
-             updateTable();
-            //successNoty("common.saved");
-        }
-    });
-}
-
-function deleteRow(id) {
-    $.ajax({
-        url: ajaxUrl + id,
-        type: "DELETE",
-        success: function () {
-            updateTable();
-            //  successNoty("common.deleted");
-        }
-    });
-}
 
 function updateRow(id) {
     $("#modalTitle").html("Редактирование пользователя");
@@ -44,16 +21,46 @@ function updateRow(id) {
     });
 }
 
-    function updateTable() {
-        $.ajax({
-            type: "GET",
-            url: ajaxUrl,
-            dataType: 'json',
-            success: function (data) {
-                datatableApi.clear().rows.add(data).draw();
-            }
-        });
-    }
+//Save/delete user
+
+function save() {
+    $.ajax({
+        type: "POST",
+        url: ajaxUrl,
+        data:form.serialize(),
+        success: function () {
+            $("#editRow").modal("hide");
+             updateTable();
+             successNoty("Пользователь сохранен");
+        }
+    });
+}
+
+function deleteRow(id) {
+    $.ajax({
+        url: ajaxUrl + id,
+        type: "DELETE",
+        success: function () {
+            updateTable();
+            successNoty("Пользователь удален");
+        }
+    });
+}
+
+//Update datatable
+
+function updateTable() {
+    $.ajax({
+        type: "GET",
+        url: ajaxUrl,
+        dataType: 'json',
+        success: function (data) {
+            datatableApi.clear().rows.add(data).draw();
+        }
+    });
+}
+
+//Datatable
 
 $(function () {
     datatableApi = $("#datatable").DataTable({
@@ -69,65 +76,53 @@ $(function () {
             {"data": "birthday"},
             {"data": "login"},
             {"data": "password"},
-            {"data": "info"},
+            {"data": "info",
+                "sHeightMatch": "auto"},
             {"data": "adress"},
             {"orderable": false,
-                 "defaultContent": "",
-                 "render": renderEditBtn
+                "defaultContent": "",
+                "render": renderEditBtn
             },
             {"orderable": false,
                 "defaultContent": "",
                 "render": renderDeleteBtn
             }
         ],
-        "order": [[0,"asc"]]//,
-       // "initComplete": makeEditable
+        "order": [[0,"asc"]],
+        "initComplete": errorHandling
     });
 });
-/*
-function makeEditable() {
-    form = $('#detailsForm');
-    $(document).ajaxError(function (event, jqXHR, options, jsExc) {
-        failNoty(event, jqXHR, options, jsExc);
-    });
-}
 
-var failedNote;
-
-function closeNoty() {
-    if (failedNote) {
-        failedNote.close();
-        failedNote = undefined;
-    }
-}
-
-function successNoty(key) {
-    closeNoty();
-    new Noty({
-        text: "<span class='glyphicon glyphicon-ok'></span> &nbsp;" + i18n[key],
-        type: 'success',
-        layout: "bottomRight",
-        timeout: 1000
-    }).show();
-}
-
-function failNoty(event, jqXHR, options, jsExc) {
-    closeNoty();
-    failedNote = new Noty({
-        text: "<span class='glyphicon glyphicon-exclamation-sign'></span> &nbsp;" + i18n["common.errorStatus"] + ": " + jqXHR.status + (jqXHR.responseJSON ? "<br>" + jqXHR.responseJSON : ""),
-        type: "error",
-        layout: "bottomRight"
-    }).show();
-}*/
+//Edit and delete impl
 
 function renderEditBtn(data, type, row) {
     if (type === "display") {
         return "<a onclick='updateRow(" + row.id + ");'>" +
-            "<span class='glyphicon glyphicon-pencil' cursor='pointer' aria-hidden='true'></span></a>";
+            "<span class='glyphicon glyphicon-pencil' aria-hidden='true'></span></a>";
     }
 }
 
 function renderDeleteBtn(data, type, row) {
         return "<a onclick='deleteRow(" + row.id + ");'>" +
-            "<span class='glyphicon glyphicon-remove' cursor='pointer' aria-hidden='true'></span></a>";
+            "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
+}
+
+//User noty creating
+
+function errorHandling() {
+    $(document).ajaxError(function (event, jqXHR, options, jsExc) {
+        errorNoty(jqXHR.status, jqXHR.responseText);
+    });
+}
+
+function successNoty(message) {
+    $("#success").css({"display" : ""});
+    $("#success").html(message);
+    setTimeout(function(){$("#success").css({"display" : "none"})}, 5000);
+}
+
+function errorNoty(status, respounce) {
+    $("#error").css({"display" : ""});
+    $("#error").html("Статус ошибки: " + status + "<br>" + respounce);
+    setTimeout(function(){$("#error").css({"display" : "none"})}, 7000);
 }

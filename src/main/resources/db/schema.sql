@@ -1,3 +1,5 @@
+/*Creatig table in standart DB "postgres"*/
+
 DROP TABLE IF EXISTS userslist;
 DROP SEQUENCE IF EXISTS global_seq;
 

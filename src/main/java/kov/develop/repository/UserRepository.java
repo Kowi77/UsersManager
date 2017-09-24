@@ -8,14 +8,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * Use standart Spring Data methods
+ */
+
 @Repository
 @Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     @Override
     List<User> findAll ();
-
-    //List<User> findAllByLastNameContainsAllIgnoreCaseOrderByLastName(String part);
 
     @Override
     User findOne(Integer id);

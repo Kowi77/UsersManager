@@ -7,9 +7,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.DispatcherServlet;
 
 import javax.servlet.FilterRegistration;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 
 /**
  * Startup of application
@@ -33,7 +31,6 @@ public class InitConfig implements WebApplicationInitializer {
         ServletRegistration.Dynamic dispatcher =
                 container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
         dispatcher.setLoadOnStartup(1);
-        //dispatcher.addMapping("/");
         dispatcher.addMapping("/");
 
         container.setInitParameter("defaultHtmlEscape", "true");

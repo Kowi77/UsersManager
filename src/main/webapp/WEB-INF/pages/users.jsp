@@ -4,6 +4,7 @@
 <head>
     <title>Управление пользователями</title>
     <%--<base href="${pageContext.request.contextPath}/"/>--%>
+    <link rel="stylesheet" href="resources/style.css">
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
     <link rel="stylesheet" href="webjars/datatables/1.10.15/media/css/dataTables.bootstrap.min.css">
 
@@ -14,43 +15,29 @@
     <script type="text/javascript" src="../../resources/userUtils.js" defer></script>
 </head>
 <body>
-
-<h1>Cписок пользователей</h1>
-
-<a class="btn btn-primary" onclick="add()">
-    <span class="glyphicon glyphicon-plus" aria-hidden="true">  ДОБАВИТЬ</span>
-</a>
-<div class="jumbotron">
-    <table class="table table-striped display" id="datatable">
-        <thead>
-        <tr>
-            <th>Имя</th>
-            <th>Фамилия</th>
-            <th>Дата рождения</th>
-            <th>Логин</th>
-            <th>Пароль</th>
-            <th>Информация</th>
-            <th>Адрес</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody></tbody>
-        <%--<c:forEach items="${users}" var="user">
+<div class="container-fluid">
+    <h1>Cписок пользователей</h1>
+    <a class="btn btn-primary" onclick="add()">
+        <span class="glyphicon glyphicon-plus" aria-hidden="true">  ДОБАВИТЬ</span>
+    </a>
+    <br><div class="jumbotron">
+        <table class="table table-striped display" id="datatable">
+            <thead>
             <tr>
-                <td>${user.firstName}</td>
-                <td>${user.lastName}</td>
-                <td>${user.birthday}</td>
-
-                <td>${user.login}</td>
-                <td>${user.password}</td>
-                <td>${user.info}</td>
-                <td>${user.adress}</td>
-                <td></td>
-                <td></td>
+                <th>Имя</th>
+                <th>Фамилия</th>
+                <th>Дата рождения</th>
+                <th>Логин</th>
+                <th>Пароль</th>
+                <th>Информация</th>
+                <th>Адрес</th>
+                <th></th>
+                <th></th>
             </tr>
-        </c:forEach>--%>
-    </table>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </div>
 
 <%--Form for add/edit user--%>
@@ -69,48 +56,48 @@
                         <label for="firstName" class="control-label col-xs-3">Имя</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="firstName" name="firstName"
-                                   placeholder="${user.firstName}">
+                                   placeholder="Имя">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="lastName" class="control-label col-xs-3">Фамилия</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="lastName" name="lastName"
-                                   placeholder="${user.lastName}">
+                                   placeholder="Фамилия">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="birthday" class="control-label col-xs-3">День рождения</label>
                         <div class="col-xs-9">
-                            <input type="date" class="form-control" id="birthday" name="birthday" placeholder="${user.birthday}">
+                            <input type="date" class="form-control" id="birthday" name="birthday" placeholder="">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="login" class="control-label col-xs-3">Логин</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="login" name="login"
-                                   placeholder="${user.login}">
+                                   placeholder="Логин (4-10) символов">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="password" class="control-label col-xs-3">Пароль</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="password" name="password"
-                                   placeholder="${user.password}">
+                                   placeholder="Пароль (4-10) символов">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="info" class="control-label col-xs-3">Информация</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="info" name="info"
-                                   placeholder="${user.info}">
+                                   placeholder="Информация">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="adress" class="control-label col-xs-3">Адрес</label>
                         <div class="col-xs-9">
                             <input type="text" class="form-control" id="adress" name="adress"
-                                   placeholder="${user.adress}">
+                                   placeholder="Адрес">
                         </div>
                     </div>
                     <div class="form-group">
@@ -125,6 +112,8 @@
         </div>
     </div>
 </div>
-
+<%--Info message--%>
+<div id="success" style="display: none" class="alert alert-success"></div>
+<div id="error" style="display: none" class="alert alert-danger"></div>
 </body>
 </html>

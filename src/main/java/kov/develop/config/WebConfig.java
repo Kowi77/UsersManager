@@ -14,11 +14,12 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.List;
 
 /**
- * Web resources configuration
+ * Web resources and binding configuration
  */
 
 @Configuration
@@ -33,36 +34,16 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         resolver.setSuffix(".jsp");
         return resolver;
     }
-    @Bean
-    public Jackson2ObjectMapperBuilder jackson2ObjectMapperBuilder() {
-        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-        //builder.featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-        return builder;
-    }
-
-   /* @Bean
-    public MappingJackson2HttpMessageConverter jsonConverter() {
-        MappingJackson2HttpMessageConverter jacksonConverter = new
-                MappingJackson2HttpMessageConverter();
-        jacksonConverter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8, MediaType.TEXT_PLAIN, MediaType.TEXT_XML));
-        jacksonConverter.setObjectMapper(new ObjectMapper());
-        return jacksonConverter;
-    }*/
-  /* @Override
-   public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-       Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
-       builder.indentOutput(true).dateFormat(new SimpleDateFormat("yyyy-MM-dd"));
-       converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
-       converters.add(new MappingJackson2XmlHttpMessageConverter(builder.createXmlMapper(true).build()));
-   }
-}*/
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         final MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         final ObjectMapper objectMapper = new ObjectMapper();
+        Jackson2ObjectMapperBuilder builder = new Jackson2ObjectMapperBuilder();
+        builder.indentOutput(true).dateFormat(new SimpleDateFormat("yyyy-MM-dd"));
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        converter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8, MediaType.TEXT_PLAIN, MediaType.TEXT_XML));
+        converters.add(new MappingJackson2HttpMessageConverter(builder.build()));
+        converter.setSupportedMediaTypes(Arrays.asList(MediaType.APPLICATION_JSON_UTF8, MediaType.TEXT_PLAIN, MediaType.TEXT_HTML));
         converter.setObjectMapper(objectMapper);
         converters.add(converter);
         super.configureMessageConverters(converters);
