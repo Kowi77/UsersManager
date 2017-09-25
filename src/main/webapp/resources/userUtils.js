@@ -107,7 +107,7 @@ function renderDeleteBtn(data, type, row) {
             "<span class='glyphicon glyphicon-remove' aria-hidden='true'></span></a>";
 }
 
-//User noty creating
+//User's noties creating
 
 function errorHandling() {
     $(document).ajaxError(function (event, jqXHR, options, jsExc) {

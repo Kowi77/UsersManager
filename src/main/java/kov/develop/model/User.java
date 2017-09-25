@@ -53,5 +53,16 @@ public class User implements Serializable{
     @NotBlank
     @Size(max = 30)
     private String adress;
+
+    public User(Integer id, String firstName, String lastName, LocalDate birthday, String login, String password, String info, String adress) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.birthday = birthday;
+        this.login = login;
+        this.password = password;
+        this.info = info;
+        this.adress = adress;
+    }
 }
 

@@ -53,7 +53,7 @@ public class UserRestController {
                 try {
                     setValue(Integer.parseInt(text));
                 } catch (NumberFormatException e) {
-                    // = NEW USER!! Don't need handle this exception
+                    // = NEW USER! Don't need to handle this exception
                 }
             }
         });
@@ -75,12 +75,12 @@ public class UserRestController {
     }
 
     //Data from request recieved via Spring binding and checeked by validators
-    // Return response with errors definition, if it's need
+    // Return response with error's definition, if it's need
     @PostMapping
     public ResponseEntity<String> createOrUpdate(@Valid User user, BindingResult result) {
-        ResponseEntity<String> re;
+        ResponseEntity<String> response;
         if (result.hasErrors()){
-            re = getErrors(result);
+            response = getErrors(result);
             return getErrors(result);}
       service.save(user);
       return new ResponseEntity<>(HttpStatus.OK);

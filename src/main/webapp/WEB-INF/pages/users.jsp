@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Управление пользователями</title>
-    <%--<base href="${pageContext.request.contextPath}/"/>--%>
+    <base href="${pageContext.request.contextPath}/"/>
     <link rel="stylesheet" href="resources/style.css">
     <link rel="stylesheet" href="webjars/bootstrap/3.3.7-1/css/bootstrap.min.css">
     <link rel="stylesheet" href="webjars/datatables/1.10.15/media/css/dataTables.bootstrap.min.css">
@@ -12,7 +12,7 @@
     <script type="text/javascript" src="webjars/bootstrap/3.3.7-1/js/bootstrap.min.js" defer></script>
     <script type="text/javascript" src="webjars/datatables/1.10.15/media/js/jquery.dataTables.min.js" defer></script>
     <script type="text/javascript" src="webjars/datatables/1.10.15/media/js/dataTables.bootstrap.min.js" defer></script>
-    <script type="text/javascript" src="../../resources/userUtils.js" defer></script>
+    <script type="text/javascript" src="resources/userUtils.js" defer></script>
 </head>
 <body>
 <div class="container-fluid">
